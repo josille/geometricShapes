@@ -1,0 +1,40 @@
+{
+	"info": {
+		"name": "testGeometricShape",
+		"_postman_id": "1b8b6f5e-fca6-66c5-1201-bfddf7edecbc",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Post api",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"shapes\": [\n        {\n            \"params\": [\n                5,\n                6\n            ],\n            \"type\": \"Circle\"\n        },\n        {\n            \"params\": [\n                20,\n                30\n            ],\n            \"type\": \"Square\"\n        }\n    ]\n}"
+				},
+				"url": {
+					"raw": "http://localhost/geometricShapes/src/api.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"geometricShapes",
+						"src",
+						"api.php"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

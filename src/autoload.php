@@ -2,8 +2,12 @@
 
 // spl_autoload_register includes all files inside class folder
 spl_autoload_register(function ($className) {
-    $file = 'classes/' . $className . '.php';
+    
+    $file = __DIR__ . '/classes/' . $className . '.php';
+     
     if (file_exists($file)) {
-        include $file;
+
+        include_once $file;
     }
+
 });
