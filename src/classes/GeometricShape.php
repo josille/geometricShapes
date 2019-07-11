@@ -15,9 +15,15 @@
  */
 class GeometricShape
 {
-    // LoadShape returns a new object of a shape.
-    public static function LoadShape($shape)
+    private static function NormalizeName(string $shape): string
     {
-        return new $shape($shape);
+        return ucfirst(strtolower($shape));
+    }
+
+    // LoadShape returns a new object of a shape.
+    public static function LoadShape($shape): ShapeAbstract
+    {
+        $obj = self::NormalizeName($shape);
+        return new $obj($shape);
     }
 }

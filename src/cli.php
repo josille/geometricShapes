@@ -29,39 +29,43 @@
 
 require_once 'autoload.php';
 
+try {
 // simple check to verify that are parameters
-// todo: add more checks for single quotes
-if (count($argv) == 1) {
-    echo "Parameter needed. Ex: Rectangle, Circle ";
-    exit;
-}
+    // todo: add more checks for single quotes
+    if (count($argv) == 1) {
+        // echo "Parameter needed. Ex: Rectangle, Circle ";
+        throw new ShapeException("Parameter needed. Ex: Rectangle, Circle ");
+        exit;
+    }
 
 // we loop in all the arguments
-for ($i = 1; $i < count($argv); $i++) {
+    for ($i = 1; $i < count($argv); $i++) {
 
-    // try to parse the input
-    $shapeParts = parseInput($argv[$i]);
+        // try to parse the input
+        $shapeParts = parseInput($argv[$i]);
+ 
+        if (count($shapeParts) < 3) {
+            // echo "Parameter needed. Ex: Rectangle, Circle ";
+            throw new ShapeException("Shape parameters incomplete.");
+            exit;
+        }
 
-    try {
-        $shape = GeometricShape::LoadShape($shapeParts[0]);
-        $shape->length = $shapeParts[1];
-        $shape->width = $shapeParts[2];
+        list($shapeType,$shapeLenght,$shapeWidth) = $shapeParts;
 
-        echo "Shape " . $i . " '" . $shapeParts[0] . "'\n";
+        $shape = GeometricShape::LoadShape($shapeType);
+        $shape->length = $shapeLenght;
+        $shape->width = $shapeWidth;
+
+        echo "Shape " . $i . " '" . $shape->Name() . "'\n";
         echo "Perimeter: " . $shape->Perimeter() . "\n";
         echo "Area: " . $shape->Area() . "\n";
         echo $shape->Draw() . "\n";
-
-        echo "\n\n";
-    } catch (Throwable $t) {
-        echo 'Error:  ', $t->getMessage(), "\n";
-
-    } catch (Exception $e) {
-        echo 'Exception: ', $e->getMessage(), "\n";
     }
+} catch (ShapeException $e) {
+    echo $e->shapeCustomError();
 }
 
-// parseInput expect a argument string with singel quotes,
+// parseInput expect a argument string with single quotes,
 // and will try to parse it.
 function parseInput($argvShape)
 {

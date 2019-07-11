@@ -15,7 +15,7 @@
  */
 class JsonShape
 {
-    private $type;
+    private $Type;
     private $Parameters;
 
     public function __construct($json = false)
@@ -26,29 +26,29 @@ class JsonShape
     }
 
     // Returns the type of Shape
-    public function getType()
+    public function getType(): string
     {
-        return $this->type;
+        return $this->Type;
     }
     // Set the type of Shape
-    public function setType($type)
+    public function setType(string $type)
     {
-        $this->type = $type;
+        $this->Type = $type;
     }
 
     // Returns the Parameters of Shape
-    public function getParameters()
+    public function getParameters(): string
     {
         return $this->Parameters;
     }
     // Set the Parameters of Shape
-    public function setParameters($Parameters)
+    public function setParameters($Parameters): string
     {
         $this->Parameters = $Parameters;
     }
 
     // Assings variables from an array
-    public function set($data)
+    public function set(array $data): void
     {
         foreach ($data as $key => $value) {
             switch ($key) {

@@ -32,30 +32,27 @@ require_once 'autoload.php';
 
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
+try {
+    $postJson = json_decode(file_get_contents("php://input"));
+    if ($postJson->shapes == null) {
+        throw new ShapeException("No post body found.");
+        exit;
+    }
 
-$postJson = json_decode(file_get_contents("php://input"));
+    foreach ($postJson->shapes as $key => $value) {
+        $class = new JsonShape($value);
 
-if ($postJson->shapes == null) {
-    echo "Error";
-    exit;
-}
-
-foreach ($postJson->shapes as $key => $value) {
-    $class = new JsonShape($value);
-    try {
         $shape = GeometricShape::LoadShape($class->getType());
         $shape->length = 1;
         $shape->width = 2;
 
-        echo "Shape " . $key . " '" . $class->getType() . "'\n";
+        echo "Shape " . $key . " '" . $shape->Name() . "'\n";
         echo "Perimeter: " . $shape->Perimeter() . "\n";
         echo "Area: " . $shape->Area() . "\n";
         echo $shape->Draw() . "\n";
 
-    } catch (Throwable $t) {
-        echo 'Error:  ', $t->getMessage(), "\n";
-
-    } catch (Exception $e) {
-        echo 'Exception: ', $e->getMessage(), "\n";
     }
+
+} catch (ShapeException $e) {
+    echo $e->shapeCustomError();
 }
